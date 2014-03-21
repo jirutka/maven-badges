@@ -1,22 +1,38 @@
 require 'sinatra'
-require_relative 'sonatype.rb'
-require_relative 'shields.rb'
+require_relative 'sonatype'
+require_relative 'shields'
 
-get '/' do
-  "I'm alive!"
+DEFAULT_SUBJECT = 'maven central'
+PROJECT_SITE = 'https://github.com/jirutka/maven-badges'
+
+configure :production do
+  disable :static
+  before { cache_control :public, :max_age => 3600 }
 end
 
-get '/artifact/:group_id/:artifact_id' do |group_id, artifact_id|
-  content_type 'image/svg+xml'
-  cache_control :public, :max_age => 3600
+get '/' do
+  content_type :text
+  "Nothing is here, see #{PROJECT_SITE}."
+end
+
+get '/maven-central/:group/:artifact/badge.?:format?' do |group, artifact, format|
+  halt 415 unless ['svg', 'png'].include? format
+
+  content_type format
+  subject = params['subject'] || DEFAULT_SUBJECT
 
   begin
-    status = Sonatype.last_artifact_version(group_id, artifact_id)
+    version = Sonatype.last_artifact_version(group, artifact)
     color = :brightgreen
-  rescue HTTParty::ResponseError => e
-    status = e.response.code == 404 ? 'unknown' : 'error'
-    color = :red
+  rescue NotFoundError
+    version = 'unknown'
+    color = :lightgray
   end
 
-  Shields.badge_image 'Maven', status, color
+  Shields.badge_image subject, version, color, format
+end
+
+error do
+  content_type :text
+  halt 500, "Something went wrong, please open an issue on #{PROJECT_SITE}/issues"
 end

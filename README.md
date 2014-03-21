@@ -10,13 +10,13 @@ Well, I put together [shields.io](http://shields.io/), [Heroku](https://heroku.c
 Usage
 -----
 
-    http://maven-badges.herokuapp.com/maven-central/{group_id}/{artifact_id}/badge.(svg|png)
+    https://maven-badges.herokuapp.com/maven-central/{group_id}/{artifact_id}/badge.(svg|png)
 
 For an example:
 
-	![[Maven Central](http://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser/badge.svg)](http://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser)
+	[![Maven Central](https://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser/badge.svg)](https://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser)
 
-![[Maven Central](http://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser/badge.svg)](http://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser)
+[![Maven Central](https://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser/badge.svg)](https://maven-badges.herokuapp.com/maven-central/cz.jirutka.rsql/rsql-parser)
 
 
 License

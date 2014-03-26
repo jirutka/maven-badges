@@ -15,8 +15,8 @@ get '/' do
   "Nothing is here, see #{PROJECT_SITE}."
 end
 
-# Returns badge image
-get '/maven-central/:group/:artifact/badge.?:format?' do |group, artifact, format|
+# Returns badge image with the artifact's last version number
+get '/maven-central/:group/:artifact/badge.:format' do |group, artifact, format|
   halt 415 unless ['svg', 'png'].include? format
 
   content_type format
@@ -30,10 +30,17 @@ get '/maven-central/:group/:artifact/badge.?:format?' do |group, artifact, forma
     color = :lightgray
   end
 
-  Shields.badge_image subject, version, color, format
+  Shields.badge_image(subject, version, color, format)
 end
 
-# Redirects to artifact's page on maven.org
+# Returns the artifact's last version number in plain text
+get '/maven-central/:group/:artifact/last_version' do |group, artifact|
+  content_type :text
+
+  MavenCentral.last_artifact_version(group, artifact)
+end
+
+# Redirects to the artifact's page on search.maven.org
 get '/maven-central/:group/:artifact/?' do |group, artifact|
   begin
     version = MavenCentral.last_artifact_version(group, artifact)

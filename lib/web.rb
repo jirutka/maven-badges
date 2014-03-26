@@ -3,7 +3,6 @@ require_relative 'maven_central'
 require_relative 'shields'
 
 DEFAULT_SUBJECT = 'maven central'
-MAVEN_SEARCH_URI = 'http://search.maven.org'
 PROJECT_SITE = 'https://github.com/jirutka/maven-badges'
 
 configure :production do
@@ -38,9 +37,9 @@ end
 get '/maven-central/:group/:artifact/?' do |group, artifact|
   begin
     version = MavenCentral.last_artifact_version(group, artifact)
-    redirect to "#{MAVEN_SEARCH_URI}/#artifactdetails|#{group}|#{artifact}|#{version}|"
+    redirect to MavenCentral.artifact_details_url(group, artifact, version)
   rescue NotFoundError
-    redirect to "#{MAVEN_SEARCH_URI}/#search|ga|1|g:\"#{group}\" AND a:\"#{artifact}\""
+    redirect to MavenCentral.search_by_ga_url(group, artifact)
   end
 end
 

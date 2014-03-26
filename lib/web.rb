@@ -1,5 +1,5 @@
 require 'sinatra'
-require_relative 'sonatype'
+require_relative 'maven_central'
 require_relative 'shields'
 
 DEFAULT_SUBJECT = 'maven central'
@@ -24,7 +24,7 @@ get '/maven-central/:group/:artifact/badge.?:format?' do |group, artifact, forma
   subject = params['subject'] || DEFAULT_SUBJECT
 
   begin
-    version = Sonatype.last_artifact_version(group, artifact)
+    version = MavenCentral.last_artifact_version(group, artifact)
     color = :brightgreen
   rescue NotFoundError
     version = 'unknown'
@@ -37,7 +37,7 @@ end
 # Redirects to artifact's page on maven.org
 get '/maven-central/:group/:artifact/?' do |group, artifact|
   begin
-    version = Sonatype.last_artifact_version(group, artifact)
+    version = MavenCentral.last_artifact_version(group, artifact)
     redirect to "#{MAVEN_SEARCH_URI}/#artifactdetails|#{group}|#{artifact}|#{version}|"
   rescue NotFoundError
     redirect to "#{MAVEN_SEARCH_URI}/#search|ga|1|g:\"#{group}\" AND a:\"#{artifact}\""

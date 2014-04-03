@@ -1,5 +1,6 @@
 Badges for Maven projects
 =========================
+[![Dependency Status](https://gemnasium.com/jirutka/maven-badges.svg)](https://gemnasium.com/jirutka/maven-badges)
 
 Badges! These tiny pictures with label and some numbers, you see them in many GitHub readmes. We all love them, yeah? Travis, Coveralls, Code Climate, Gemnasium, Gem, PyPi, npm… 
 However, most of them are not usable for Java/Groovy guys and that’s quite sad, isn’t it?

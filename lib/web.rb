@@ -3,6 +3,7 @@ require_relative 'maven_central'
 require_relative 'shields'
 
 DEFAULT_SUBJECT = 'maven central'
+DEFAULT_STYLE = 'default'
 PROJECT_SITE = 'https://github.com/jirutka/maven-badges'
 
 configure :production do
@@ -30,7 +31,9 @@ get '/maven-central/:group/:artifact/badge.:format' do |group, artifact, format|
     color = :lightgray
   end
 
-  Shields.badge_image(subject, version, color, format)
+  style = params[:style] || DEFAULT_STYLE
+
+  Shields.badge_image(subject, version, color, format, style)
 end
 
 # Returns the artifact's last version number in plain text

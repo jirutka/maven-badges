@@ -7,8 +7,8 @@ class Shields
 
   base_uri 'img.shields.io'
 
-  def self.badge_image(subject, status, color, format='svg')
-    resp = get("/badge/#{encode(subject)}-#{encode(status)}-#{color}.#{format}")
+  def self.badge_image(subject, status, color, format='svg', style='default')
+    resp = get("/badge/#{encode(subject)}-#{encode(status)}-#{color}.#{format}?style=#{style}")
 
     raise HTTParty::ResponseError.new(resp) unless resp.code == 200
     resp.body

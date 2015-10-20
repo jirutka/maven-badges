@@ -1,4 +1,5 @@
 require 'httparty'
+require 'uri'
 
 class MavenCentral
   include HTTParty
@@ -25,16 +26,17 @@ class MavenCentral
 
   # Returns URL of the web page with details about the specified artifact.
   def self.artifact_details_url(group_id, artifact_id, version)
-    "#{base_uri}/#artifactdetails|#{group_id}|#{artifact_id}|#{version}|"
+    "#{base_uri}/#artifactdetails%7C#{group_id}%7C#{artifact_id}%7C#{version}%7C"
   end
 
   # Returns URL of the web page with search results for searching by the
   # artifact's coordinates.
   def self.search_by_ga_url(group_id, artifact_id)
-    "#{base_uri}/#search|ga|1|#{format_query(group_id, artifact_id)}"
+    "#{base_uri}/#search%7Cga%7C1%7C#{format_query(group_id, artifact_id)}"
   end
 
   private
+
   def self.format_query(group_id, artifact_id)
     %{g:"#{group_id}" AND a:"#{artifact_id}"}
   end

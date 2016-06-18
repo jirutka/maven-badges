@@ -4,6 +4,7 @@ require_relative 'shields'
 
 DEFAULT_SUBJECT = 'maven central'
 DEFAULT_STYLE = 'default'
+DEFAULT_COLOR = 'brightgreen'
 PROJECT_SITE = 'https://github.com/jirutka/maven-badges'
 
 configure :production do
@@ -25,7 +26,7 @@ get '/maven-central/:group/:artifact/badge.:format' do |group, artifact, format|
 
   begin
     version = MavenCentral.last_artifact_version(group, artifact)
-    color = :brightgreen
+    color = params[:color] || DEFAULT_COLOR
   rescue NotFoundError
     version = 'unknown'
     color = :lightgray

@@ -22,9 +22,14 @@ get '/maven-central/:group/:artifact/badge.:format' do |group, artifact, format|
 
   content_type format
   subject = params['subject'] || DEFAULT_SUBJECT
+  version = params[:version]
 
   begin
-    version = MavenCentral.last_artifact_version(group, artifact)
+    if (defined?(version)).nil? # will now return true or false
+      version = MavenCentral.last_artifact_version(group, artifact)
+   else
+      version = MavenCentral.defined_artifact_version(group, artifact, version)
+    end
     color = :brightgreen
   rescue NotFoundError
     version = 'unknown'

@@ -24,6 +24,21 @@ class MavenCentral
     end
   end
 
+     # Requests a specific version of the specified artifact.
+  def self.defined_artifact_version(group_id, artifact_id, version)
+    resp = get('/solrsearch/select', query: {
+      q: format_query_with_version(group_id, artifact_id, version), rows: 1
+    })
+    raise HTTParty::ResponseError.new(resp) if resp.code != 200
+
+    doc = resp.parsed_response['response']
+    if doc['numFound'] > 0
+      doc['docs'][0]['v']
+    else
+      raise NotFoundError
+    end
+  end
+
   # Returns URL of the web page with details about the specified artifact.
   def self.artifact_details_url(group_id, artifact_id, version)
     "#{base_uri}/#artifactdetails%7C#{group_id}%7C#{artifact_id}%7C#{version}%7C"
@@ -39,6 +54,10 @@ class MavenCentral
 
   def self.format_query(group_id, artifact_id)
     %{g:"#{group_id}" AND a:"#{artifact_id}"}
+  end
+
+  def self.format_query_with_version(group_id, artifact_id, version)
+    %{g:"#{group_id}" AND a:"#{artifact_id}" AND v:"#{version}"}
   end
 end
 

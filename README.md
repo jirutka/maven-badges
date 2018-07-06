@@ -1,6 +1,5 @@
 Badges for Maven projects
 =========================
-[![Dependency Status](https://gemnasium.com/jirutka/maven-badges.svg)](https://gemnasium.com/jirutka/maven-badges)
 
 ## Outdated
 

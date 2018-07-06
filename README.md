@@ -2,6 +2,12 @@ Badges for Maven projects
 =========================
 [![Dependency Status](https://gemnasium.com/jirutka/maven-badges.svg)](https://gemnasium.com/jirutka/maven-badges)
 
+## Outdated
+
+We have migrated this project to NodeJS and you can find a new version [here](https://github.com/softwaremill/maven-badges). Please report any issues there, PRs are welcome as well :)
+
+## Description
+
 Badges! These tiny pictures with label and some numbers, you see them in many GitHub readmes. We all love them, yeah? Travis, Coveralls, Code Climate, Gemnasium, Gem, PyPi, npm… 
 However, most of them are not usable for Java/Groovy guys and that’s quite sad, isn’t it?
 
